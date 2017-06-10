@@ -18,6 +18,10 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 
+/**
+ * @version 1.0
+ * @author maui
+ */
 public class DotMaui {
 
     private final String APIKEY;

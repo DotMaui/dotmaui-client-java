@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- *
+ * @version 1.0
  * @author maui
  */
 public class Interface {

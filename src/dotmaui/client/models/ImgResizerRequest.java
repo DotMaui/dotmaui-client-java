@@ -1,10 +1,10 @@
 package dotmaui.client.models;
 
 /**
- *
+ * @version 1.0
  * @author .Maui
  */
-public class ImgResizerRequest {
+public class ImgResizerRequest { 
 
     private String url;
     private int width;
