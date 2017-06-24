@@ -2,6 +2,7 @@ package dotmaui.client;
 
 import static dotmaui.client.Interface.apiRequest;
 import dotmaui.client.models.ImgResizerRequest;
+import dotmaui.client.models.Modes;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -9,6 +10,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -19,10 +21,10 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 
 /**
- * 
+ *
  * @version 1.0
  * @author maui
- * 
+ *
  */
 public class DotMaui {
 
@@ -50,10 +52,60 @@ public class DotMaui {
         return apiRequest(urlApi, urlParameters);
     }
 
+    public String MinifyCSS(dotmaui.client.models.MinifyRequest req) throws UnsupportedEncodingException, Exception {
+        String urlApi = ENDPOINT + CLIENT_VERSION + "/cssmin/";
+        String urlParameters = "apikey=" + APIKEY;
+
+        if (req.getUrls() != null && req.getUrls().size() > 0) {
+
+            for (String url : req.getUrls()) {
+                urlParameters += "&url[]=" + URLEncoder.encode(url, "UTF-8");
+            }
+
+        } else if (!"".equals(req.getString())) {
+            urlParameters += "&css=" + URLEncoder.encode(req.getString(), "UTF-8");
+        }
+
+        if (req.getMode() == Modes.CDN) {
+            urlParameters += "&mode=cdn";
+        }
+        
+        if (req.getName() != null && !"".equals(req.getName().trim())) {
+            urlParameters += "&name=" + req.getName();
+        }
+
+        return apiRequest(urlApi, urlParameters);
+    }
+
     public String MinifyJSFromUrl(String url)
             throws UnsupportedEncodingException, Exception {
         String urlApi = ENDPOINT + CLIENT_VERSION + "/jsmin/";
         String urlParameters = "apikey=" + APIKEY + "&url=" + URLEncoder.encode(url, "UTF-8");
+
+        return apiRequest(urlApi, urlParameters);
+    }
+
+    public String MinifyJS(dotmaui.client.models.MinifyRequest req) throws UnsupportedEncodingException, Exception {
+        String urlApi = ENDPOINT + CLIENT_VERSION + "/jsmin/";
+        String urlParameters = "apikey=" + APIKEY;
+
+        if (req.getUrls() != null && req.getUrls().size() > 0) {
+
+            for (String url : req.getUrls()) {
+                urlParameters += "&url[]=" + URLEncoder.encode(url, "UTF-8");
+            }
+
+        } else if (!"".equals(req.getString())) {
+            urlParameters += "&js=" + URLEncoder.encode(req.getString(), "UTF-8");
+        }
+
+        if (req.getMode() == Modes.CDN) {
+            urlParameters += "&mode=cdn";
+        }
+        
+        if (req.getName() != null && !"".equals(req.getName().trim())) {
+            urlParameters += "&name=" + req.getName();
+        }
 
         return apiRequest(urlApi, urlParameters);
     }
@@ -112,10 +164,10 @@ public class DotMaui {
         if (req.getWidth() != 0) {
             postParameters.add(new BasicNameValuePair("width", req.getWidth() + ""));
         }
-        
+
         if (req.getHeight() != 0) {
             postParameters.add(new BasicNameValuePair("height", req.getHeight() + ""));
-        }        
+        }
 
         try {
 
